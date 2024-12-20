@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="ERROR">
+<Configuration status="WARN">
     <Appenders>
-        <Console name="STDOUT" target="SYSTEM_OUT">
-            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %c:%L - %m%n"/>
+        <!-- Console Appender: Logs to the console -->
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36}:%L - %msg%n" />
         </Console>
-        <Routing name="MyRoutingAppender">
-            <Routes pattern="$${ctx:ROUTINGKEY}">
-                <Route>
-                    <RollingFile
-                            name="appender-${ctx:ROUTINGKEY}"
-                            fileName="${ctx:ROUTINGKEY}/Application.log"
-                            filePattern="${ctx:ROUTINGKEY}/$${date:yyyy-MM-dd}/Application-%d{yyyy-MM-dd}-%i.log"
-                            append="false">
-                        <PatternLayout>
-                            <Pattern>[${ctx:ROUTINGKEY} %-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %c{1}:%L - %m%n</Pattern>
-                        </PatternLayout>
-                        <Policies>
-                            <TimeBasedTriggeringPolicy />
-                            <SizeBasedTriggeringPolicy size="10MB" />
-                        </Policies>
-                        <DefaultRolloverStrategy max="5" />
-                    </RollingFile>
-                </Route>
-            </Routes>
-        </Routing>
+
+        <!-- File Appender: Generates a new log file with a unique timestamped name on each run -->
+        <File name="FileAppender" fileName="logs/application-${date:yyyy-MM-dd_HH-mm-ss}.log">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36}:%L - %msg%n</Pattern>
+            </PatternLayout>
+        </File>
     </Appenders>
+
     <Loggers>
-        <Logger name="com.qa" level="debug" additivity="false">
-            <AppenderRef ref="STDOUT"/>
-            <AppenderRef ref="MyRoutingAppender"/>
+        <!-- Logger for com.pages package -->
+        <Logger name="com.pages" level="DEBUG" additivity="false">
+            <AppenderRef ref="ConsoleAppender" />
+            <AppenderRef ref="FileAppender" />
         </Logger>
-        <Root level="info">
-            <AppenderRef ref="STDOUT"/>
+
+        <!-- Logger for com.utils package -->
+        <Logger name="com.utils" level="INFO" additivity="false">
+            <AppenderRef ref="ConsoleAppender" />
+            <AppenderRef ref="FileAppender" />
+        </Logger>
+
+        <!-- Root logger -->
+        <Root level="INFO">
+            <AppenderRef ref="ConsoleAppender" />
+            <AppenderRef ref="FileAppender" />
         </Root>
     </Loggers>
 </Configuration>

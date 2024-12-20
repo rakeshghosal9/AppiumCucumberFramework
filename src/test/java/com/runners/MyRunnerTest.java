@@ -13,9 +13,10 @@ import static io.cucumber.junit.CucumberOptions.SnippetType.CAMELCASE;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        plugin = {"pretty"
-                , "html:target/cucumber/report.html"
-                , "summary"
+        plugin = {"pretty",
+                "html:target/cucumber/report.html",
+                "json:target/cucumber-report.json",
+                "summary"
 //                , "me.jvt.cucumber.report.PrettyReports:target/Pixel3/cucumber-html-reports"
         }
         ,features = {"src/test/resources/features"}
@@ -32,10 +33,10 @@ public class MyRunnerTest {
     @BeforeClass
     public static void initialize() throws Exception {
        /* GlobalParams params = new GlobalParams();
-        params.initializeGlobalParams();
+        params.initializeGlobalParams();*/
 
-        ThreadContext.put("ROUTINGKEY", params.getPlatformName() + "_"
-                + params.getDeviceName());*/
+        ThreadContext.put("ROUTINGKEY", "android" + "_"
+                + "emulator");
 
         new ServerManager().startServer();
         new DriverManager().initializeDriver();

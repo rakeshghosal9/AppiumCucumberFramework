@@ -5,6 +5,7 @@ import com.utils.TestUtils;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.InteractsWithApps;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -287,6 +288,17 @@ public class BasePage {
             return true;
         } catch (Exception e) {
             System.out.println("Exception occurred while performing scroll : " + e);
+            return false;
+        }
+    }
+
+    public boolean androidHideKeyboard() {
+        try {
+            AndroidDriver androidDriver = (AndroidDriver) driver;
+            androidDriver.hideKeyboard();
+            return true;
+
+        } catch (Exception e) {
             return false;
         }
     }

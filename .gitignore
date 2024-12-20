@@ -1,3 +1,5 @@
 /target/
 **/ExtentReports/**
 /target/test-classes/
+/logs/**
+/Android_Device_1/**

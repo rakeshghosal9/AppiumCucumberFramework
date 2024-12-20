@@ -2,6 +2,7 @@ package com.stepdefs;
 
 import com.pages.BasePage;
 import com.utils.DriverManager;
+import com.utils.VideoManager;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
@@ -25,7 +26,7 @@ public class Hooks {
 
         new ServerManager().startServer();
         new DriverManager().initializeDriver();*/
-        //new VideoManager().startRecording();
+        new VideoManager().startRecording();
     }
 
     @After
@@ -35,7 +36,7 @@ public class Hooks {
             scenario.attach(screenshot, "image/png", scenario.getName());
         }
 
-        //new VideoManager().stopRecording(scenario.getName());
+        new VideoManager().stopRecording(scenario.getName());
 /*        DriverManager driverManager = new DriverManager();
         if(driverManager.getDriver() != null){
             driverManager.getDriver().quit();
