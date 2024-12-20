@@ -17,8 +17,9 @@ public class DriverOptionsManager {
         try{
             utils.log().info("getting options");
             UiAutomator2Options options = new UiAutomator2Options();
-            options.setDeviceName("Appium_1");
-            options.setApp(System.getProperty("user.dir")+"\\src\\test\\java\\com\\resources\\Android.SauceLabs.Mobile.Sample.app.2.7.1.apk");
+            options.setDeviceName("AppiumAndroidDevice");
+            options.setApp(System.getProperty("user.dir")+"\\src\\test\\resources\\apps\\General-Store.apk");
+            utils.log().info("Options Returned");
             return options;
         } catch(Exception e){
             e.printStackTrace();

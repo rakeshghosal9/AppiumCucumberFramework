@@ -280,4 +280,14 @@ public class BasePage {
         t.press(point(startX, startY)).waitAction(waitOptions(ofMillis(millis))).moveTo(point(endX, endY)).release()
                 .perform();
     }*/
+
+    public boolean performScroll(String text) {
+        try {
+            driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"" + text + "\"));"));
+            return true;
+        } catch (Exception e) {
+            System.out.println("Exception occurred while performing scroll : " + e);
+            return false;
+        }
+    }
 }
