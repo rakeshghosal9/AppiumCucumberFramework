@@ -4,7 +4,7 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class GeneralStorePage extends BasePage {
+public class GeneralStoreHomePage extends BasePage {
 
     @AndroidFindBy(id = "com.androidsample.generalstore:id/nameField")
     private WebElement nameField;
@@ -19,7 +19,7 @@ public class GeneralStorePage extends BasePage {
     @AndroidFindBy(id = "android:id/text1")
     private WebElement countryNameDropdown;
 
-    public GeneralStorePage() {
+    public GeneralStoreHomePage() {
     }
 
     public void setNameField(String name) {

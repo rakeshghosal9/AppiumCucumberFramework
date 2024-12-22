@@ -27,7 +27,7 @@ import static io.cucumber.junit.CucumberOptions.SnippetType.CAMELCASE;
         ,snippets = CAMELCASE
         ,dryRun=false
         ,monochrome=true
-        ,tags = "@GENERAL_STORE"
+        ,tags = "@GENERAL_STORE_CART"
 
 )
 
