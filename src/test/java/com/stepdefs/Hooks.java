@@ -36,7 +36,7 @@ public class Hooks {
             scenario.attach(screenshot, "image/png", scenario.getName());
         }
 
-        new VideoManager().stopRecording(scenario.getName());
+        //new VideoManager().stopRecording(scenario.getName());
 /*        DriverManager driverManager = new DriverManager();
         if(driverManager.getDriver() != null){
             driverManager.getDriver().quit();

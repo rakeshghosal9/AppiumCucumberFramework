@@ -6,6 +6,7 @@ import io.appium.java_client.ios.IOSDriver;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Properties;
 
 public class DriverManager {
     private static ThreadLocal<AppiumDriver> driver = new ThreadLocal<>();
@@ -21,15 +22,15 @@ public class DriverManager {
 
     public void initializeDriver() throws Exception {
         AppiumDriver driver = null;
-        /*GlobalParams params = new GlobalParams();
-        PropertyManager props = new PropertyManager();*/
+        Properties props = new PropertyManager().getProps();
 
         if (driver == null) {
             try {
                 utils.log().info("initializing Appium driver");
                 /*switch(params.getPlatformName()){
                     case "Android":*/
-                driver = new AndroidDriver(new URL("http://127.0.0.1:4723/"), new DriverOptionsManager().getOptions());
+                driver = new AndroidDriver(new URL(props.getProperty("APPIUM_SERVER_URL")),
+                        new DriverOptionsManager().getAndroidOptions());
                         /*break;
                     case "iOS":
                         driver = new IOSDriver(new ServerManager().getServer().getUrl(), new CapabilitiesManager().getCaps());

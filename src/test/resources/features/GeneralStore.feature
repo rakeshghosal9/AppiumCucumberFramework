@@ -7,5 +7,5 @@ Feature: General Store
     And I select the country as "<country>" from dropdown
     Then click on the submit button
     Examples:
-      | name   | gender | country |
-      | Rakesh | Female | India   |
+      | name   | gender | country    |
+      | Rakesh | Female | Bangladesh |

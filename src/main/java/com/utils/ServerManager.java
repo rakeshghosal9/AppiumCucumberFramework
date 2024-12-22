@@ -5,6 +5,8 @@ import io.appium.java_client.service.local.AppiumServerHasNotBeenStartedLocallyE
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Properties;
 
 public class ServerManager {
     private static ThreadLocal<AppiumDriverLocalService> server = new ThreadLocal<>();
@@ -14,7 +16,7 @@ public class ServerManager {
         return server.get();
     }
 
-    public void startServer(){
+    public void startServer() throws IOException {
         utils.log().info("starting appium server");
         AppiumDriverLocalService server = windowsGetAppiumService();
         server.start();
@@ -31,12 +33,12 @@ public class ServerManager {
         return AppiumDriverLocalService.buildDefaultService();
     }
 
-    public AppiumDriverLocalService windowsGetAppiumService() {
-
+    public AppiumDriverLocalService windowsGetAppiumService() throws IOException {
+        Properties props = new PropertyManager().getProps();
         return new AppiumServiceBuilder()
-                .withAppiumJS(new File("C:\\Users\\rakes\\AppData\\Roaming\\npm\\node_modules\\appium\\build\\lib\\main.js"))
-                .withIPAddress("127.0.0.1")
-                .usingPort(4723)
+                .withAppiumJS(new File(props.getProperty("MAIN_JS_FILE_LOCATION")))
+                .withIPAddress(props.getProperty("APPIUM_IP_ADDRESS"))
+                .usingPort(Integer.parseInt(props.getProperty("APPIUM_PORT")))
                 .build();
 
         //GlobalParams params = new GlobalParams();
