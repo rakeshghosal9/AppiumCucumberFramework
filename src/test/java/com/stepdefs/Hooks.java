@@ -13,19 +13,10 @@ import java.io.IOException;
 public class Hooks {
 
     @Before
-    public void initialize() throws Exception {
+    public void initialize(Scenario scenario) throws Exception {
         BasePage basePage = new BasePage();
         basePage.closeApp();
         basePage.launchApp();
-
-/*        GlobalParams params = new GlobalParams();
-        params.initializeGlobalParams();
-
-        ThreadContext.put("ROUTINGKEY", params.getPlatformName() + "_"
-                + params.getDeviceName());
-
-        new ServerManager().startServer();
-        new DriverManager().initializeDriver();*/
         new VideoManager().startRecording();
     }
 

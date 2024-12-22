@@ -6,31 +6,37 @@
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36}:%L - %msg%n" />
         </Console>
 
-        <!-- File Appender: Generates a new log file with a unique timestamped name on each run -->
-        <File name="FileAppender" fileName="logs/application-${date:yyyy-MM-dd_HH-mm-ss}.log">
-            <PatternLayout>
-                <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36}:%L - %msg%n</Pattern>
-            </PatternLayout>
-        </File>
+        <!-- Routing Appender: Routes logs to different directories based on a key -->
+        <Routing name="RoutingAppender">
+            <Routes pattern="${ctx:ROUTINGKEY}">
+                <Route>
+                    <File name="FileAppender" fileName="logs/${ctx:ROUTINGKEY}/application-${date:yyyy-MM-dd_HH-mm-ss}.log">
+                        <PatternLayout>
+                            <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36}:%L - %msg%n</Pattern>
+                        </PatternLayout>
+                    </File>
+                </Route>
+            </Routes>
+        </Routing>
     </Appenders>
 
     <Loggers>
         <!-- Logger for com.pages package -->
         <Logger name="com.pages" level="DEBUG" additivity="false">
             <AppenderRef ref="ConsoleAppender" />
-            <AppenderRef ref="FileAppender" />
+            <AppenderRef ref="RoutingAppender" />
         </Logger>
 
         <!-- Logger for com.utils package -->
         <Logger name="com.utils" level="INFO" additivity="false">
             <AppenderRef ref="ConsoleAppender" />
-            <AppenderRef ref="FileAppender" />
+            <AppenderRef ref="RoutingAppender" />
         </Logger>
 
         <!-- Root logger -->
         <Root level="INFO">
             <AppenderRef ref="ConsoleAppender" />
-            <AppenderRef ref="FileAppender" />
+            <AppenderRef ref="RoutingAppender" />
         </Root>
     </Loggers>
 </Configuration>

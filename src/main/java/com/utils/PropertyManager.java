@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class PropertyManager {
     private static Properties props = new Properties();
-    TestUtils utils = new TestUtils();
+    //TestUtils utils = new TestUtils();
 
     public Properties getProps() throws IOException {
         InputStream is = null;
@@ -14,12 +14,12 @@ public class PropertyManager {
 
         if(props.isEmpty()){
             try{
-                utils.log().info("loading config properties");
+                //utils.log().info("loading config properties");
                 is = getClass().getClassLoader().getResourceAsStream(propsFileName);
                 props.load(is);
             } catch (IOException e) {
                 e.printStackTrace();
-                utils.log().fatal("Failed to load config properties. ABORT!!" + e.toString());
+                //utils.log().fatal("Failed to load config properties. ABORT!!" + e.toString());
                 throw e;
             } finally {
                 if(is != null){

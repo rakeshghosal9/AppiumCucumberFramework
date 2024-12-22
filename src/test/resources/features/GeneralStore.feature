@@ -1,3 +1,4 @@
+@GENERAL_STORE_ALL_SCENARIO
 Feature: General Store
 
   @GENERAL_STORE

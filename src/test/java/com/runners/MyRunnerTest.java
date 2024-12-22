@@ -1,5 +1,6 @@
 package com.runners;
 
+import com.utils.CommonUtilities;
 import com.utils.DriverManager;
 import com.utils.PropertyManager;
 import com.utils.ServerManager;
@@ -10,6 +11,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
+import java.io.File;
 import java.util.Properties;
 
 import static io.cucumber.junit.CucumberOptions.SnippetType.CAMELCASE;
@@ -27,7 +29,7 @@ import static io.cucumber.junit.CucumberOptions.SnippetType.CAMELCASE;
         ,snippets = CAMELCASE
         ,dryRun=false
         ,monochrome=true
-        ,tags = "@GENERAL_STORE_CART"
+        ,tags = "@GENERAL_STORE"
 
 )
 
@@ -35,12 +37,10 @@ public class MyRunnerTest {
 
     @BeforeClass
     public static void initialize() throws Exception {
-       /* GlobalParams params = new GlobalParams();
-        params.initializeGlobalParams();*/
+        CommonUtilities obj = new CommonUtilities();
+        obj.createLogDirectory();
         Properties props = new PropertyManager().getProps();
-        ThreadContext.put("ROUTINGKEY", "android" + "_"
-                + "emulator");
-
+        ThreadContext.put("ROUTINGKEY", props.getProperty("PLATFORM_NAME") + File.separator + props.getProperty("ANDROID_DEVICE_NAME"));
         if(props.getProperty("START_STOP_APPIUM_SERVER_PROGRAMMATICALLY").equalsIgnoreCase("Yes")) {
             new ServerManager().startServer();
         }
