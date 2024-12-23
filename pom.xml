@@ -96,7 +96,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <projectName>Orange HRM</projectName>
+                            <projectName>Appium Cucumber Framework</projectName>
                             <skip>false</skip>
                             <outputDirectory>${project.build.directory}/cucumber-report-html</outputDirectory>
                             <inputDirectory>${project.build.directory}</inputDirectory>
