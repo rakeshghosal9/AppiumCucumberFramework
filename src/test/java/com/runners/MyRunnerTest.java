@@ -29,7 +29,7 @@ import static io.cucumber.junit.CucumberOptions.SnippetType.CAMELCASE;
         ,snippets = CAMELCASE
         ,dryRun=false
         ,monochrome=true
-        ,tags = "@GENERAL_STORE"
+        ,tags = "@GENERAL_STORE_ALL_SCENARIO"
 
 )
 
@@ -37,13 +37,13 @@ public class MyRunnerTest {
 
     @BeforeClass
     public static void initialize() throws Exception {
-        CommonUtilities obj = new CommonUtilities();
-        obj.createLogDirectory();
         Properties props = new PropertyManager().getProps();
         ThreadContext.put("ROUTINGKEY", props.getProperty("PLATFORM_NAME") + File.separator + props.getProperty("ANDROID_DEVICE_NAME"));
         if(props.getProperty("START_STOP_APPIUM_SERVER_PROGRAMMATICALLY").equalsIgnoreCase("Yes")) {
             new ServerManager().startServer();
         }
+        CommonUtilities obj = new CommonUtilities();
+        obj.createLogDirectory();
         new DriverManager().initializeDriver();
     }
 

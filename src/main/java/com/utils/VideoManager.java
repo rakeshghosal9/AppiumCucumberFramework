@@ -6,22 +6,25 @@ import org.apache.commons.codec.binary.Base64;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Properties;
 
 public class VideoManager {
     TestUtils utils = new TestUtils();
 
+    public static String videoDateTime = null;
     public void startRecording() {
         ((CanRecordScreen) new DriverManager().getDriver()).startRecordingScreen();
+        if(videoDateTime==null) {
+            videoDateTime = CommonUtilities.dateTime();
+        }
     }
-
     public void stopRecording(String scenarioName) throws IOException {
-        //GlobalParams params = new GlobalParams();
+        Properties props = new PropertyManager().getProps();
         String media = ((CanRecordScreen) new DriverManager().getDriver()).stopRecordingScreen();
-        String dirPath = "Android" + "_"
-                + "Device_1" + File.separator + "Videos";
-
+        String dirPath = System.getProperty("user.dir")+props.getProperty("VIDEO_RECORDING_STORAGE_LOCATION")
+                +File.separator+props.getProperty("PLATFORM_NAME")+File.separator+props.get("ANDROID_DEVICE_NAME")
+                +File.separator+videoDateTime;
         File videoDir = new File(dirPath);
-
         synchronized (videoDir) {
             if (!videoDir.exists()) {
                 videoDir.mkdirs();

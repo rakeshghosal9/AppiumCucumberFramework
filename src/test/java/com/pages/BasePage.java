@@ -63,6 +63,7 @@ public class BasePage {
     public void sendKeys(WebElement e, String txt) {
         waitForVisibility(e);
         e.sendKeys(txt);
+        utils.log().info("Entered value : "+txt);
     }
 
     public void sendKeys(WebElement e, String txt, String msg) {
