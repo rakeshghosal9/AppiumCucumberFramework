@@ -8,8 +8,8 @@ Feature: General Store
     And I select the country as "<country>" from dropdown
     Then click on the submit button
     Examples:
-      | name   | gender | country    |
-      | Rakesh | Female | Bangladesh |
+      | name        | gender | country    |
+      | Sample Name | Female | Bangladesh |
 
 
   @GENERAL_STORE_CART
@@ -22,5 +22,5 @@ Feature: General Store
     And click on the cart symbol
     Then validate the total value of the cart
     Examples:
-      | name   | gender | country    |
-      | Rakesh | Female | Bangladesh |
+      | name        | gender | country    |
+      | Sample Name | Female | Bangladesh |
