@@ -50,7 +50,7 @@ Let's see what are the features that you will get in this Framework.
 
 - Eclipse/Intellij or other IDE to import the project. Recommended Intellij as it has inbuilt support for Cucumber.
 - Set the PATH variable ANDROID_HOME. Usually it's **C:\Users\<user_id>\AppData\Local\Android\Sdk** in Windows Laptop.
-- Add SDK Tools, SDK Platform Tools in PATH variable. Usually it's **C:\Users\rakes\AppData\Local\Android\Sdk\tools\bin, C:\Users\rakes\AppData\Local\Android\Sdk\tools, C:\Users\rakes\AppData\Local\Android\Sdk\platform-tools**.
+- Add SDK Tools, SDK Platform Tools in PATH variable. Usually it's **C:\Users\<user_id>\AppData\Local\Android\Sdk\tools\bin, C:\Users\<user_id>\AppData\Local\Android\Sdk\tools, C:\Users\<user_id>\AppData\Local\Android\Sdk\platform-tools**.
 - Internet access to download the dependencies from Maven Central Repository.
   
 ## Maven Dependencies
