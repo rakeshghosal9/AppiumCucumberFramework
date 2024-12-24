@@ -97,7 +97,7 @@ public class BasePage {
                 txt = getAttribute(e, "label");
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + "Android");
+                throw new IllegalStateException("Unexpected value: " + props.getProperty("PLATFORM_NAME"));
         }
         utils.log().info(msg + txt);
         return txt;
@@ -114,7 +114,7 @@ public class BasePage {
                 txt = getAttribute(e, "label");
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + "Android");
+                throw new IllegalStateException("Unexpected value: " + props.getProperty("PLATFORM_NAME"));
         }
         utils.log().info(msg + txt);
         return txt;
@@ -153,7 +153,7 @@ public class BasePage {
     public WebElement andScrollToElementUsingUiScrollable(String childLocAttr, String childLocValue) {
         return driver.findElement(AppiumBy.androidUIAutomator(
                 "new UiScrollable(new UiSelector()" + ".scrollable(true)).scrollIntoView("
-                        + "new UiSelector()."+ childLocAttr +"(\"" + childLocValue + "\"));"));
+                        + "new UiSelector()."+ childLocAttr +"(" + childLocValue + "));"));
     }
 
     public WebElement iOSScrollToElementUsingMobileScroll(WebElement e) {
@@ -166,129 +166,6 @@ public class BasePage {
         return e;
     }
 
-    public By iOSScrollToElementUsingMobileScrollParent(WebElement parentE, String predicateString) {
-        RemoteWebElement parent = (RemoteWebElement)parentE;
-        String parentID = parent.getId();
-        HashMap<String, String> scrollObject = new HashMap<String, String>();
-        scrollObject.put("element", parentID);
-//	  scrollObject.put("direction", "down");
-	  scrollObject.put("predicateString", predicateString);
-//	  scrollObject.put("name", "test-ADD TO CART");
-//        scrollObject.put("toVisible", "sdfnjksdnfkld");
-        driver.executeScript("mobile:scroll", scrollObject);
-        By m = AppiumBy.iOSNsPredicateString(predicateString);
-        System.out.println("Mobilelement is " + m);
-        return m;
-    }
-
-/*    public MobileElement scrollToElement(MobileElement element, String direction) throws Exception {
-        Dimension size = driver.manage().window().getSize();
-        int startX = (int) (size.width * 0.5);
-        int endX = (int) (size.width * 0.5);
-        int startY = 0;
-        int endY = 0;
-        boolean isFound = false;
-
-        switch (direction) {
-            case "up":
-                endY = (int) (size.height * 0.4);
-                startY = (int) (size.height * 0.6);
-                break;
-
-            case "down":
-                endY = (int) (size.height * 0.6);
-                startY = (int) (size.height * 0.4);
-                break;
-        }
-
-        for (int i = 0; i < 3; i++) {
-            if (find(element, 1)) {
-                isFound = true;
-                break;
-            } else {
-                swipe(startX, startY, endX, endY, 1000);
-            }
-        }
-        if(!isFound){
-            throw new Exception("Element not found");
-        }
-        return element;
-    }
-
-    public By scrollToElement(By element, String direction) throws Exception {
-        Dimension size = driver.manage().window().getSize();
-        int startX = (int) (size.width * 0.5);
-        int endX = (int) (size.width * 0.5);
-        int startY = 0;
-        int endY = 0;
-        boolean isFound = false;
-
-        switch (direction) {
-            case "up":
-                endY = (int) (size.height * 0.4);
-                startY = (int) (size.height * 0.6);
-                break;
-
-            case "down":
-                endY = (int) (size.height * 0.6);
-                startY = (int) (size.height * 0.4);
-                break;
-        }
-
-        for (int i = 0; i < 3; i++) {
-            if (find(element, 1)) {
-                isFound = true;
-                break;
-            } else {
-                swipe(startX, startY, endX, endY, 1000);
-            }
-        }
-        if(!isFound){
-            throw new Exception("Element not found");
-        }
-        return element;
-    }*/
-
-    public boolean find(final WebElement element, int timeout) {
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
-            return wait.until(new ExpectedCondition<Boolean>() {
-                @Override
-                public Boolean apply(WebDriver driver) {
-                    if (element.isDisplayed()) {
-                        return true;
-                    }
-                    return false;
-                }
-            });
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    public boolean find(final By element, int timeout) {
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
-            return wait.until(new ExpectedCondition<Boolean>() {
-                @Override
-                public Boolean apply(WebDriver driver) {
-                    if (driver.findElement(element).isDisplayed()) {
-                        return true;
-                    }
-                    return false;
-                }
-            });
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-/*    public void swipe(int startX, int startY, int endX, int endY, int millis)
-            throws InterruptedException {
-        TouchAction t = new TouchAction(driver);
-        t.press(point(startX, startY)).waitAction(waitOptions(ofMillis(millis))).moveTo(point(endX, endY)).release()
-                .perform();
-    }*/
 
     public boolean performScroll(String text) {
         try {

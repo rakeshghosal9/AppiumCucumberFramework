@@ -19,6 +19,7 @@ public class DriverOptionsManager {
             utils.log().info("getting android options");
             UiAutomator2Options options = new UiAutomator2Options();
             options.setPlatformName("android");
+            //If execution type is cloud, fetch the options
             if (props.getProperty("EXECUTION_TYPE").equalsIgnoreCase("Cloud")) {
                 options.setPlatformVersion(props.getProperty("BS_ANDROID_PLATFORM_VERSION"));
                 options.setDeviceName(props.getProperty("BS_ANDROID_DEVICE_NAME"));
@@ -27,6 +28,7 @@ public class DriverOptionsManager {
                 options.setAppActivity(props.getProperty("ANDROID_APP_ACTIVITY"));
                 options.setCapability("bstack:options", getBStackOptions(props));
             } else {
+                //if execution is local, fetch the options
                 options.autoGrantPermissions();
                 options.setAppWaitDuration(Duration.ofSeconds(20));
                     options.setAutomationName(props.getProperty("ANDROID_AUTOMATION_NAME"));
