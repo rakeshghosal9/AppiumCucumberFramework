@@ -1,6 +1,7 @@
 package com.pages;
 
 import com.utils.DriverManager;
+import com.utils.PropertyManager;
 import com.utils.TestUtils;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
@@ -16,12 +17,15 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.Properties;
 
 public class BasePage {
     private AppiumDriver driver;
     TestUtils utils = new TestUtils();
+
 
     public BasePage(){
         this.driver = new DriverManager().getDriver();
@@ -82,31 +86,14 @@ public class BasePage {
         return driver.findElement(e).getAttribute(attribute);
     }
 
-    public String getText(WebElement e, String msg) {
+    public String getText(WebElement e, String msg) throws IOException {
         String txt;
-        //switch(new GlobalParams().getPlatformName()){
-        switch("Android"){
-            case "Android":
+        Properties props = new PropertyManager().getProps();
+        switch(props.getProperty("PLATFORM_NAME").toUpperCase()){
+            case "ANDROID":
                 txt = getAttribute(e, "text");
                 break;
-            case "iOS":
-                txt = getAttribute(e, "label");
-                break;
-            default:
-                //throw new IllegalStateException("Unexpected value: " + new GlobalParams().getPlatformName());
-                throw new IllegalStateException("Unexpected value: " + "Android");
-        }
-        utils.log().info(msg + txt);
-        return txt;
-    }
-
-    public String getText(By e, String msg) {
-        String txt;
-        switch("Android"){
-            case "Android":
-                txt = getAttribute(e, "text");
-                break;
-            case "iOS":
+            case "IOS":
                 txt = getAttribute(e, "label");
                 break;
             default:
@@ -116,25 +103,48 @@ public class BasePage {
         return txt;
     }
 
-    public void closeApp() {
-        switch("Android"){
-            case "Android":
-                ((InteractsWithApps) driver).terminateApp(driver.getCapabilities().
-                    getCapability("appPackage").toString());
+    public String getText(By e, String msg) throws IOException {
+        String txt;
+        Properties props = new PropertyManager().getProps();
+        switch(props.getProperty("PLATFORM_NAME").toUpperCase()){
+            case "ANDROID":
+                txt = getAttribute(e, "text");
                 break;
-            case "iOS":
+            case "IOS":
+                txt = getAttribute(e, "label");
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + "Android");
+        }
+        utils.log().info(msg + txt);
+        return txt;
+    }
+
+    public void closeApp() throws IOException {
+        Properties props = new PropertyManager().getProps();
+        switch (props.getProperty("PLATFORM_NAME").toUpperCase()) {
+            case "ANDROID":
                 ((InteractsWithApps) driver).terminateApp(driver.getCapabilities().
-                        getCapability("bundleId").toString());
+                        getCapability("appPackage").toString());
+                break;
+            case "IOS":
+                try {
+                    ((InteractsWithApps) driver).terminateApp(driver.getCapabilities().
+                            getCapability("bundleId").toString());
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
         }
     }
 
-    public void launchApp() {
-        switch("Android"){
-            case "Android":
+    public void launchApp() throws IOException {
+        Properties props = new PropertyManager().getProps();
+        switch(props.getProperty("PLATFORM_NAME").toUpperCase()){
+            case "ANDROID":
                 ((InteractsWithApps) driver).activateApp(driver.getCapabilities().
                         getCapability("appPackage").toString());
                 break;
-            case "iOS":
+            case "IOS":
                 ((InteractsWithApps) driver).activateApp(driver.getCapabilities().
                         getCapability("bundleId").toString());
         }
@@ -151,9 +161,6 @@ public class BasePage {
         String elementID = element.getId();
         HashMap<String, String> scrollObject = new HashMap<String, String>();
         scrollObject.put("element", elementID);
-//	  scrollObject.put("direction", "down");
-//	  scrollObject.put("predicateString", "label == 'ADD TO CART'");
-//	  scrollObject.put("name", "test-ADD TO CART");
         scrollObject.put("toVisible", "sdfnjksdnfkld");
         driver.executeScript("mobile:scroll", scrollObject);
         return e;

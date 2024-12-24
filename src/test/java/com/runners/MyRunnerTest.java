@@ -29,7 +29,7 @@ import static io.cucumber.junit.CucumberOptions.SnippetType.CAMELCASE;
         ,snippets = CAMELCASE
         ,dryRun=false
         ,monochrome=true
-        ,tags = "@GENERAL_STORE_ALL_SCENARIO"
+        ,tags = "@SWAGLAB_LOGIN_SCENARIO"
 
 )
 
@@ -38,12 +38,26 @@ public class MyRunnerTest {
     @BeforeClass
     public static void initialize() throws Exception {
         Properties props = new PropertyManager().getProps();
-        ThreadContext.put("ROUTINGKEY", props.getProperty("PLATFORM_NAME") + File.separator + props.getProperty("ANDROID_DEVICE_NAME"));
-        if(props.getProperty("START_STOP_APPIUM_SERVER_PROGRAMMATICALLY").equalsIgnoreCase("Yes")) {
+        String routingKey = null;
+        if (props.getProperty("EXECUTION_TYPE").equalsIgnoreCase("Cloud")) {
+            if (props.getProperty("PLATFORM_NAME").equalsIgnoreCase("Android")) {
+                routingKey = props.getProperty("PLATFORM_NAME") +
+                        File.separator + "Cloud" + File.separator + props.getProperty("BS_ANDROID_DEVICE_NAME");
+            } else {
+                routingKey = props.getProperty("PLATFORM_NAME") +
+                        File.separator + "Cloud" + File.separator + props.getProperty("BS_IOS_DEVICE_NAME");
+            }
+        } else {
+            routingKey = props.getProperty("PLATFORM_NAME") +
+                    File.separator + "Local" + File.separator + props.getProperty("ANDROID_DEVICE_NAME");
+        }
+        ThreadContext.put("ROUTINGKEY", routingKey);
+        if (props.getProperty("START_STOP_APPIUM_SERVER_PROGRAMMATICALLY").equalsIgnoreCase("Yes")
+                && !props.getProperty("EXECUTION_TYPE").equalsIgnoreCase("Cloud")) {
             new ServerManager().startServer();
         }
         CommonUtilities obj = new CommonUtilities();
-        obj.createLogDirectory();
+        obj.createLogDirectory(routingKey);
         new DriverManager().initializeDriver();
     }
 

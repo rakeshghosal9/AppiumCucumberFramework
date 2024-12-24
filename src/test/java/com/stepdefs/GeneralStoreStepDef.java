@@ -1,10 +1,12 @@
 package com.stepdefs;
 
-import com.pages.CartPage;
+import com.pages.GeneralStoreCartPage;
 import com.pages.GeneralStoreHomePage;
 import com.pages.GeneralStoreProductDetailsPage;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import java.io.IOException;
 
 public class GeneralStoreStepDef {
     @When("I set the name field as {string}")
@@ -39,8 +41,8 @@ public class GeneralStoreStepDef {
     }
 
     @Then("validate the total value of the cart")
-    public void validateTotalValue() {
-        new CartPage().validateTotalCartValue();
+    public void validateTotalValue() throws IOException {
+        new GeneralStoreCartPage().validateTotalCartValue();
     }
 
 }

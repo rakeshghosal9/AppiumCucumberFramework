@@ -9,9 +9,9 @@ import java.util.Properties;
 
 public class CommonUtilities {
 
-    public void createLogDirectory() throws IOException {
+    public void createLogDirectory(String directoryPath) throws IOException {
         Properties props = new PropertyManager().getProps();
-        String logDir = "logs/" + props.getProperty("PLATFORM_NAME") + File.separator + props.getProperty("ANDROID_DEVICE_NAME");
+        String logDir = "logs/" + directoryPath;
         File directory = new File(logDir);
         if (!directory.exists()) {
             directory.mkdirs();

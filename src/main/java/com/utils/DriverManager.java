@@ -27,15 +27,27 @@ public class DriverManager {
         if (driver == null) {
             try {
                 utils.log().info("initializing Appium driver");
-                /*switch(params.getPlatformName()){
-                    case "Android":*/
-                driver = new AndroidDriver(new URL(props.getProperty("APPIUM_SERVER_URL")),
-                        new DriverOptionsManager().getAndroidOptions());
-                        /*break;
-                    case "iOS":
-                        driver = new IOSDriver(new ServerManager().getServer().getUrl(), new CapabilitiesManager().getCaps());
+                switch (props.getProperty("PLATFORM_NAME").toUpperCase()) {
+                    case "ANDROID":
+                        if (props.getProperty("EXECUTION_TYPE") != null &&
+                                props.getProperty("EXECUTION_TYPE").equalsIgnoreCase("Cloud")) {
+                            driver = new AndroidDriver(new URL(props.getProperty("BS_URL")),
+                                    new DriverOptionsManager().getUiAutomatorOptions());
+                        } else {
+                            driver = new AndroidDriver(new URL(props.getProperty("APPIUM_SERVER_URL")),
+                                    new DriverOptionsManager().getUiAutomatorOptions());
+                        }
                         break;
-                }*/
+                    case "IOS":
+                        if (props.getProperty("EXECUTION_TYPE") != null &&
+                                props.getProperty("EXECUTION_TYPE").equalsIgnoreCase("Cloud")) {
+                            driver = new IOSDriver(new URL(props.getProperty("BS_URL")),
+                                    new DriverOptionsManager().getXCUITestOptions());
+                        } else {
+                            System.out.println("To be implemented");
+                        }
+                        break;
+                }
                 if (driver == null) {
                     throw new Exception("driver is null. ABORT!!!");
                 }
