@@ -52,13 +52,20 @@ public class DriverOptionsManager {
         try {
             XCUITestOptions iosOptions = new XCUITestOptions();
             iosOptions.setPlatformName("ios");
+            iosOptions.setAutomationName(props.getProperty("IOS_AUTOMATION_NAME"));
+            iosOptions.setBundleId(props.getProperty("IOS_BUNDLE_ID"));
             if (props.getProperty("EXECUTION_TYPE").equalsIgnoreCase("Cloud")) {
-                iosOptions.setAutomationName("XCUITest");
-                iosOptions.setBundleId(props.getProperty("BS_IOS_BUNDLE_ID"));
                 iosOptions.setPlatformVersion(props.getProperty("BS_IOS_PLATFORM_VERSION"));
                 iosOptions.setDeviceName(props.getProperty("BS_IOS_DEVICE_NAME"));
                 iosOptions.setApp(props.getProperty("BS_IOS_APP_NAME"));
                 iosOptions.setCapability("bstack:options", getBStackOptions(props));
+            }
+            else
+            {
+                iosOptions.setDeviceName(props.getProperty("IOS_DEVICE_NAME"));
+                iosOptions.setApp(System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" +
+                        File.separator + "resources" + File.separator + props.getProperty("IOS_APP_LOCATION"));
+                iosOptions.setWdaLocalPort(Integer.parseInt(props.getProperty("IOS_WDA_LOCAL_PORT")));
             }
             utils.log().info("Options Returned");
             return iosOptions;
